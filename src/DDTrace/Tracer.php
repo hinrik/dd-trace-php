@@ -68,6 +68,7 @@ final class Tracer implements OpenTracingTracer
         $this->transport = $transport ?: new Http(new Json());
         $this->propagators = $propagators ?: [
             Formats\TEXT_MAP => new TextMap(),
+            Formats\HTTP_HEADERS => new TextMap(),
         ];
         $this->scopeManager = new ScopeManager();
         $this->config = array_merge($this->config, $config);
