@@ -104,13 +104,13 @@ final class Tracer implements OpenTracingTracer
         }
 
         $reference = $this->findParent($options->getReferences());
-
         if ($reference === null) {
             $context = SpanContext::createAsRoot();
         } else {
             $context = SpanContext::createAsChild($reference->getContext());
         }
 
+        error_log("Option start time '$operationName': " . $options->getStartTime());
         $span = new Span(
             $operationName,
             $context,

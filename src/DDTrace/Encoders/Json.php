@@ -26,7 +26,9 @@ final class Json implements Encoder
     {
         return '[' . implode(',', array_map(function ($trace) {
             return '[' . implode(',', array_filter(array_map(function ($span) {
-                return $this->encodeSpan($span);
+                $name = $span->getOperationName();
+                    error_log("Span $name start time: " . print_r($span, 1));
+                    return $this->encodeSpan($span);
             }, $trace))) . ']';
         }, $traces))  . ']';
     }

@@ -66,7 +66,7 @@ class LaravelProvider extends ServiceProvider
         $startSpanOptions = StartSpanOptionsFactory::createForWebRequest(
             $tracer,
             [
-                'start_time' => fromMicrotime(LARAVEL_START),
+                'start_time' => DDTrace\Time\now(),
             ],
             $this->app->make('request')->header()
         );
@@ -74,7 +74,7 @@ class LaravelProvider extends ServiceProvider
         // Create a span that starts from when Laravel first boots (public/index.php)
         $scope = $tracer->startActiveSpan('laravel.request', $startSpanOptions);
         $requestSpan = $scope->getSpan();
-        $requestSpan->setTag(Tags\SERVICE_NAME, $this->getAppName());
+        $requestSpan->setTag(Tags\SERVICE_NAME, $this->getAppName() . rand(1, 10));
         $requestSpan->setTag(Tags\SPAN_TYPE, Types\WEB_SERVLET);
 
         // Name the scope when the route matches
